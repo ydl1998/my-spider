@@ -21,7 +21,7 @@ public class App {
 	public static void main(String[] args) {
 		//目标 UML
 		String url ="https://movie.douban.com/top250";
-		//使用 JSOUP抓取文档
+		//使用JSOUP抓取文档
 		try {
 			Document doc = Jsoup.connect(url).get();
 			Elements es = doc.select(".grid_view .item");
@@ -29,19 +29,28 @@ public class App {
 //			Elements es = doc.select("img");
 			System.out.println(es.size());
 			
-			//创建
+			//创建一个影片的列表
 			ArrayList<Film> list = new ArrayList<>();
 			for (Element e :es) {
 				Film f = new Film();
 				//每一部影片
-				Element t = e.select(".title").first();
-				String num = e.select(".star span").last().text();
+//				Element t = e.select(".title").first();
+//				String num = e.select(".star span").last().text();
 //				System.out.println(e.attr("src"));
 //				System.out.println(e);
-				System.out.println(t.text() + "," + num);
+//				System.out.println(t.text() + "," + num);
 				
+				f.id = Integer.parseInt(e.select(".pic em").first().text());
+				f.poster = e.select("img").first().attr("src");
+				f.info = e.select(".bd p").first().text();
+				f.title = e.select(".title").first().text();
+				f.rating = Double.parseDouble(e.select(".rating_num").first().text());
+				String num = e.select(".star span").last().text();
+				f.num = Integer.parseInt(num.substring(0,num.length() - 3));
+				f.qoute = e.select(".inq").first().text();
 //				f.id
 //				f.title
+				System.out.println(f);
 				list.add(f);
 				
 			}
