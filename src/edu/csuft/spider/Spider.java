@@ -66,7 +66,7 @@ public class Spider implements Runnable {
 				f.num = Integer.parseInt(num.substring(0,num.length() - 3));
 				f.qoute = e.select(".inq").first().text();
 
-				System.out.println(name + ":" + f);
+//				System.out.println(name + ":" + f);
 				list.add(f);
 				
 			}
