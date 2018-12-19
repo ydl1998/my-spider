@@ -1,6 +1,6 @@
 package edu.csuft.spider;
 
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
@@ -27,7 +27,7 @@ public class App {
 		
 		ArrayList<Film> list = new ArrayList<>();
 		String url = "https://movie.douban.com/top250?start";
-		for (int i = 0; i < 10; i++) {
+		for (int i=0;i<10;i++) {
 			String path = String.format("%s=%d",url,i*25);
 			pool.submit(new Spider(path,list));	
 		}
@@ -42,28 +42,34 @@ public class App {
 			    }
 		}
 		//数据排序
-		System.out.println(list.size());
-//		for(Film film : list) {
-//			System.out.print(film.toCSV());
-//			
-//		}
-		//写入文件
-		String file = "d:/film.csv";  //绝对路径
-		file = "film.csv"; //相对路径
-		
-		//排序
 		Collections.sort(list);
-		//io		
-		try (FileWriter out = new FileWriter(file)) {
-			//写数据
-			for(Film film : list) {
-				out.write(film.toCSV());
-			}
-			System.out.println("ok");
+		System.out.println(list.size());
+		
+		ExecutorService pool2 = Executors.newFixedThreadPool(4);
+		
+		
+		for(Film film : list) {
+			System.out.println(film.url);
+			pool2.execute(new SpiderFilmDetail(film.url,null));
 			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}		
+		}
+		//写入文件
+//		String file = "d:/film.csv";  //绝对路径
+//		file = "film.csv"; //相对路径
+//		
+//		//排序
+//		Collections.sort(list);
+//		//io		
+//		try (FileWriter out = new FileWriter(file)) {
+//			//写数据
+//			for(Film film : list) {
+//				out.write(film.toCSV());
+//			}
+//			System.out.println("ok");
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}		
 				
 	}
 }

@@ -31,6 +31,11 @@ public class Film implements Comparable<Film> {
 	 * 短评
 	 */
 	String qoute;
+	/**
+	 * 影片详细信息的链接
+	 */
+	String url;
+	
 	
 	public String toCSV()
 	{
@@ -43,7 +48,7 @@ public class Film implements Comparable<Film> {
 	@Override
 	public String toString() {
 		return "Film [title=" + title + ", info=" + info + ", rating=" + rating + ", num=" + num + ", id=" + id
-				+ ", poster=" + poster + ", qoute=" + qoute + "]";
+				+ ", poster=" + poster + ", url=" + url + "]";
 	}
 	@Override
 	public int compareTo(Film o) {
